@@ -30,6 +30,7 @@
   },
   "description": "",
   "dependencies": {
+    "animejs": "^3.2.0",
     "css-loader": "^3.6.0",
     "element-ui": "^2.13.2",
     "file-loader": "^6.0.0",

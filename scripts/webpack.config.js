@@ -7,8 +7,8 @@ module.exports = {
     output: {
         path: path.resolve(__dirname, '../bundle'),
         filename: '[name].js',
-        // filename: '[name].[chunkhash].js',
-        publicPath: '/bundle', // 打包后输出路径以/dist/开头
+        // filename: '[name].[chunkhash].js',//哈希值，但是劳资不需要
+        publicPath: '/bundle', // 打包后输出路径以/bundle/开头
     },
     module: {
         rules: [
