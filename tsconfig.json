@@ -1,0 +1,25 @@
+{
+    "compilerOptions": {
+        "target": "es5",
+        "strict": true,
+        "module": "es2015",
+        "moduleResolution": "node",
+        "baseUrl": ".",
+        "paths": {
+            "@/*": ["./src/*"]
+        },
+        "outDir": "./build",
+        "lib": ["dom", "es2015", "es2016", "es2017", "esnext"],
+        "allowJs": true,
+        "jsx": "react",
+        "preserveConstEnums": true,
+        "experimentalDecorators": true,
+        "importHelpers": true,
+        "sourceMap": false,
+        "allowSyntheticDefaultImports": true,
+        "removeComments": true
+    },
+    "compileOnSave": true,
+    "include": ["./src/**/*"],
+    "exclude": ["node_modules"]
+}

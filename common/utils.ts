@@ -1,5 +1,5 @@
 // eslint-disable-next-line import/prefer-default-export
-export const getSearch = (url, key) => {
+export const getSearch = (url: string, key: any) => {
     try {
         const urlObj = new URL(url);
         const search = urlObj.search.substring(1);

@@ -3,12 +3,18 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
     mode: 'production',
-    entry: { appIndex: path.resolve(__dirname, '../src/index.js') },
+    entry: { appIndex: path.resolve(__dirname, '../src/index.tsx') },
     output: {
         path: path.resolve(__dirname, '../bundle'),
         filename: '[name].js',
         // filename: '[name].[chunkhash].js',//哈希值，但是劳资不需要
         publicPath: '/bundle', // 打包后输出路径以/bundle/开头
+    },
+    resolve: {
+        extensions: ['.ts', '.tsx', '.js', '.css', '.less'],
+        alias: {
+            vue$: 'vue/dist/vue.esm.js',
+        },
     },
     module: {
         rules: [
@@ -16,6 +22,14 @@ module.exports = {
                 test: /\.js$/,
                 use: 'babel-loader',
                 exclude: /node_modules/,
+            },
+            {
+                test: /\.(tsx|js|ts)?$/,
+                loader: 'ts-loader',
+                exclude: /node_modules/,
+                options: {
+                    transpileOnly: true,
+                },
             },
             {
                 test: /\.vue$/,
@@ -43,11 +57,6 @@ module.exports = {
             template: path.resolve(__dirname, '../src/tempIndex.html'),
         }),
     ],
-    resolve: {
-        alias: {
-            vue$: 'vue/dist/vue.esm.js',
-        },
-    },
     devServer: {
         port: 8888,
     },
