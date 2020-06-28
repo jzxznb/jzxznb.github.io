@@ -1,0 +1,117 @@
+.background{
+    height: 100%;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    .chat-room{
+        width: 50%;
+        height: 70%;
+        display: flex;
+        flex-direction: column;
+        border-radius: 4px;
+        background-image: linear-gradient(#b3d8ff, #66b1ff);
+        .usr-info{
+            padding: 15px;
+            display: flex;
+            .left-info{
+                cursor: pointer;
+                width: 48px;
+                height: 48px;
+                border-radius: 4px;
+                border: 2px double #8cc5ff;
+            }
+            .right-info{
+                padding-left: 15px;
+                .name{
+                    font-weight: 600;
+                }
+                .sign{
+                    font-size: 14px;
+                }
+            }
+        }
+        .chat-info{
+            display: flex;
+            flex-direction: column;
+            flex: 1;
+            overflow: auto;
+            padding: 15px;
+            div{
+                border-radius: 4px;
+            }
+            .send-info{
+                background-color: white;
+                height: 70%;
+                overflow: auto;
+                .admin-power{
+                    background-color: rgb(255, 255, 195);
+                    display: flex;
+                    padding: 0 10px;
+                    overflow: auto;
+                }
+                .message{
+                    display: flex;
+                    padding: 10px;
+                    font-size: 13px;
+                    align-items: center;
+                    img{
+                        cursor: pointer;
+                        width: 32px;
+                        height: 32px;
+                        border: 1px solid #F2F6FC;
+                        border-radius: 4px;
+                        overflow: hidden;
+                    }
+                    .bubble-box{
+                        padding: 5px 15px;
+                        background-image: linear-gradient(#c6e2ff, #b3d8ff);
+                        border-radius: 6px;  /*圆角弧度为7px*/
+                        position: relative;
+                    }
+                    .bubble-box::after{
+                        content: '';
+                        width: 0px;
+                        height: 0px;
+                        position: absolute;
+                        border-top:5px solid  transparent;
+                        border-bottom: 5px solid transparent;
+                    }
+                }
+                .usr{
+                    flex-direction: row-reverse;
+                    .bubble-box{
+                        margin-right: 10px;
+                    }
+                    .bubble-box::after{
+                        right: -10px;
+                        bottom: 10px;
+                        border-left:5px solid #c6e2ff;
+                        border-right:5px solid  transparent;
+                    }
+                }
+                .robot{
+                    .bubble-box{
+                        margin-left: 10px;
+                    }
+                    .bubble-box::after{
+                        left: -10px;
+                        bottom: 10px;
+                        border-right:5px solid #c6e2ff;
+                        border-left:5px solid  transparent;
+                    }
+                }
+            }
+            .drive-line{
+                height: 20px;
+            }
+            .edit-info{
+                background-color: white;
+                flex: 1;
+                outline:none;
+                padding: 10px;
+                overflow: auto;
+            }
+        }
+    }
+}

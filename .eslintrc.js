@@ -24,6 +24,7 @@ module.exports = {
         'class-methods-use-this': 'off',
         'no-unused-vars': 'off',
         'no-console': 'off',
+        'no-alert': 'off',
         indent: ['error', 4],
         'max-len': [
             'error',
