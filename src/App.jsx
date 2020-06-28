@@ -6,7 +6,7 @@ export default class App extends Component {
     state = {
         menuList: [
             { name: '1', show: this.isAdmin, url: '/child_project/docs/src/.vuepress/dist/index.html' },
-            { name: '文档', show: true, url: '/child_project/docs/src/.vuepress/dist/index.html' },
+            { name: '文档', show: true, url: '/child_project/docs/dist/index.html' },
             { name: '2', show: true },
             { name: '2', show: true },
             { name: '2', show: true },

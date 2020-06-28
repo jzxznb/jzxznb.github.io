@@ -1,5 +1,6 @@
 module.exports = {
-    base:'/child_project/docs/src/.vuepress/dist/',
+    base:'/child_project/docs/dist/',
+    dest: 'dist',
     title: 'Docs',
     themeConfig: {
         nav: [{
