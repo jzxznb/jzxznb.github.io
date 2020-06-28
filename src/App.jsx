@@ -5,8 +5,8 @@ import { getSearch } from '../common/utils.ts';
 export default class App extends Component {
     state = {
         menuList: [
-            { name: '1', show: this.isAdmin },
-            { name: '2', show: true },
+            { name: '1', show: this.isAdmin, url: '/child_project/docs/src/.vuepress/dist/index.html' },
+            { name: '文档', show: true, url: '/child_project/docs/src/.vuepress/dist/index.html' },
             { name: '2', show: true },
             { name: '2', show: true },
             { name: '2', show: true },
@@ -19,12 +19,12 @@ export default class App extends Component {
     }
 
     componentDidMount() {
-        console.log(this);
-        // this.bgInit()
+        // this.bgInit();
     }
 
     bgInit() {
         const canvasEl = this.refs['main-bg'];
+        console.log(canvasEl);
         const ctx = canvasEl.getContext('2d');
         const numberOfParticules = 30;
         let pointerX = 0;
@@ -154,15 +154,22 @@ export default class App extends Component {
         window.addEventListener('resize', setCanvasSize, false);
     }
 
+    openUrl(url) {
+        const { location } = window;
+        location.pathname = url;
+    }
+
     render() {
         const { menuList } = this.state;
         return <div className="background">
-            <div className="box">
-                {menuList.filter((item) => item.show).map((item, index) => <div key={index}>{ item.name }</div>)}
-            </div>
-            <canvas style={{
+            {/* <canvas style={{
                 position: 'absolute', top: 0, bottom: 0, left: 0, right: 0,
-            }} ref="main-bg"></canvas>
+            }} ref="main-bg">
+            </canvas> */}
+            <div className="box" >
+                {menuList.filter((item) => item.show)
+                    .map((item, index) => <div onClick={() => { this.openUrl(item.url); }} key={index}>{ item.name }</div>)}
+            </div>
         </div>;
     }
 }
