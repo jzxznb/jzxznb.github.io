@@ -1,9 +1,8 @@
-  
 import React, { Component } from 'react';
-import anime from 'animejs'
-import { getSearch } from '../common/utils';
+import anime from 'animejs';
+import { getSearch } from '../common/utils.ts';
 
-export default class AnyComponent extends Component {
+export default class App extends Component {
     state = {
         menuList: [
             { name: '1', show: this.isAdmin },
@@ -12,19 +11,20 @@ export default class AnyComponent extends Component {
             { name: '2', show: true },
             { name: '2', show: true },
             { name: '2', show: true },
-        ]
+        ],
     }
-    
+
     get isAdmin() {
         return !!getSearch(window.location.href, 'admin');
     }
 
-    public componentDidMount(){
-        console.log(this)
-        this.bgInit()
+    componentDidMount() {
+        console.log(this);
+        // this.bgInit()
     }
-    public bgInit() {
-        const canvasEl: any = this.refs['main-bg'];
+
+    bgInit() {
+        const canvasEl = this.refs['main-bg'];
         const ctx = canvasEl.getContext('2d');
         const numberOfParticules = 30;
         let pointerX = 0;
@@ -40,12 +40,12 @@ export default class AnyComponent extends Component {
             canvasEl.getContext('2d').scale(2, 2);
         }
 
-        function updateCoords(e: any) {
+        function updateCoords(e) {
             pointerX = e.clientX || e.touches[0].clientX;
             pointerY = e.clientY || e.touches[0].clientY;
         }
 
-        function setParticuleDirection(p: any) {
+        function setParticuleDirection(p) {
             const angle = (anime.random(0, 360) * Math.PI) / 180;
             const value = anime.random(50, 180);
             const radius = [-1, 1][anime.random(0, 1)] * value;
@@ -55,8 +55,8 @@ export default class AnyComponent extends Component {
             };
         }
 
-        function createParticule(x:number, y:number) {
-            const p: any = {};
+        function createParticule(x, y) {
+            const p = {};
             p.x = x;
             p.y = y;
             p.color = colors[anime.random(0, colors.length - 1)];
@@ -71,8 +71,8 @@ export default class AnyComponent extends Component {
             return p;
         }
 
-        function createCircle(x: number, y: number) {
-            const p:any = {};
+        function createCircle(x, y) {
+            const p = {};
             p.x = x;
             p.y = y;
             p.color = '#FFF';
@@ -91,13 +91,13 @@ export default class AnyComponent extends Component {
             return p;
         }
 
-        function renderParticule(anim: any) {
+        function renderParticule(anim) {
             for (let i = 0; i < anim.animatables.length; i += 1) {
                 anim.animatables[i].target.draw();
             }
         }
 
-        function animateParticules(x: any, y: any) {
+        function animateParticules(x, y) {
             const circle = createCircle(x, y);
             const particules = [];
             for (let i = 0; i < numberOfParticules; i += 1) {
@@ -105,8 +105,8 @@ export default class AnyComponent extends Component {
             }
             anime.timeline().add({
                 targets: particules,
-                x(p: any) { return p.endPos.x; },
-                y(p: any) { return p.endPos.y; },
+                x(p) { return p.endPos.x; },
+                y(p) { return p.endPos.y; },
                 radius: 0.1,
                 duration: anime.random(1200, 1800),
                 easing: 'easeOutExpo',
@@ -154,15 +154,15 @@ export default class AnyComponent extends Component {
         window.addEventListener('resize', setCanvasSize, false);
     }
 
-    public render() {
-        const { menuList } = this.state
+    render() {
+        const { menuList } = this.state;
         return <div className="background">
             <div className="box">
-                {menuList.filter(item => item.show).map((item, index) => { 
-                    return <div key={index}>{ item.name }</div>
-                 })}
+                {menuList.filter((item) => item.show).map((item, index) => <div key={index}>{ item.name }</div>)}
             </div>
-            <canvas style={{position:'absolute',top:0,bottom:0,left:0,right:0}}  ref="main-bg"></canvas>
-        </div>
+            <canvas style={{
+                position: 'absolute', top: 0, bottom: 0, left: 0, right: 0,
+            }} ref="main-bg"></canvas>
+        </div>;
     }
 }

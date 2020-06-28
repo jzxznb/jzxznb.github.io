@@ -3,7 +3,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
     mode: 'production',
-    entry: { appIndex: path.resolve(__dirname, '../src/index.tsx') },
+    entry: { appIndex: path.resolve(__dirname, '../src/index.jsx') },
     output: {
         path: path.resolve(__dirname, '../bundle'),
         filename: '[name].js',
@@ -11,7 +11,7 @@ module.exports = {
         publicPath: '/bundle', // 打包后输出路径以/bundle/开头
     },
     resolve: {
-        extensions: ['.ts', '.tsx', '.js', '.css', '.less'],
+        extensions: ['.ts', '.tsx', '.js', '.css', '.less', 'jsx'],
         alias: {
             vue$: 'vue/dist/vue.esm.js',
         },
@@ -19,7 +19,7 @@ module.exports = {
     module: {
         rules: [
             {
-                test: /\.js$/,
+                test: /\.(js|jsx)$/,
                 use: 'babel-loader',
                 exclude: /node_modules/,
             },
