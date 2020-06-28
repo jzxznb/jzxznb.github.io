@@ -8,7 +8,7 @@ module.exports = {
                 link: '/'
             },
             {
-                text: '百度',
+                text: 'github',
                 link: 'https://github.com/jzxznb'
             },
         ],
