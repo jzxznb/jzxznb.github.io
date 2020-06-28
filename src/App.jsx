@@ -14,10 +14,7 @@ export default class App extends Component {
             { name: '2', show: true },
             { name: '2', show: true },
         ],
-        messageList: [
-            { message: 'asdad', time: 1593348843396, sender: 'usr' },
-            { message: '憨八龟', time: 1593348843899, sender: 'robot' },
-        ],
+        messageList: [],
     }
 
     get isAdmin() {
@@ -96,7 +93,7 @@ export default class App extends Component {
                         })}
                     </div>
                     <div className="drive-line"></div>
-                    <div contentEditable={true} ref="input" onKeyDown={this.sendMessage.bind(this)} className="edit-info"></div>
+                    <div contentEditable={true} ref="input" onKeyDown={this.sendMessage.bind(this)} className="edit-info"/>
                 </div>
             </div>
         </div>;
