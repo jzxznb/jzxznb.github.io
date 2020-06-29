@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
-import { getSearch } from '../common/utils.ts';
+import axios from 'axios';
+import { getSearch, sleep } from '../common/utils.ts';
 import './app.less';
 
 function timeStampFormat(timeStamp) {
 }
-
 export default class App extends Component {
     state = {
         menuList: [
@@ -33,33 +33,42 @@ export default class App extends Component {
         location.pathname = url;
     }
 
-    autoResponse(message) {
+    async autoResponse(message) {
         const { menuList = '' } = this.state;
-        const res = menuList.find((item) => message.indexOf(item.name) !== -1);
+        let res = menuList.find((item) => message.indexOf(item.name) !== -1);
         if (res && res.show) {
+            await sleep(500);
             return <a href={res.url}>{res.name}</a>;
         }
-        return '你个憨八🐢，给👴爬';
+        res = await this.autoAIchat(message);
+        return res.replace(/{br}/g, '\n');
     }
 
-    sendMessage(e) {
+    async autoAIchat(message) {
+        const res = await axios.get(`http://39.98.39.217:5000/guessUcan1tfind?msg=${message}`);
+        if (!res || !res.data || !res.data.content) {
+            return '你个憨八🐢，给👴爬';
+        }
+        const { content } = (res || {}).data;
+        return content;
+    }
+
+    async sendMessage(e) {
         const { input: inputDiv } = this.refs;
         if (inputDiv && inputDiv.innerText && e.which === 13) {
             const message = inputDiv.innerText;
-            this.setMessage({ message, time: +new Date(), sender: 'usr' }, () => {
-                setTimeout(() => {
-                    this.setState({
-                        robotTyping: false,
-                    });
-                    this.setMessage({ message: this.autoResponse(message), time: +new Date(), sender: 'robot' });
-                }, 500);
-            });
+            this.setMessage({ message, time: +new Date(), sender: 'usr' });
             this.setState({
                 robotTyping: true,
             });
             setTimeout(() => {
                 inputDiv.innerHTML = '';
             }, 0);
+            const res = await this.autoResponse(message);
+            this.setMessage({ message: res, time: +new Date(), sender: 'robot' });
+            this.setState({
+                robotTyping: false,
+            });
         }
     }
 
