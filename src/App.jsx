@@ -4,6 +4,7 @@ import './app.less';
 
 function timeStampFormat(timeStamp) {
 }
+
 export default class App extends Component {
     state = {
         menuList: [
@@ -15,6 +16,7 @@ export default class App extends Component {
             { name: '2', show: true },
         ],
         messageList: [],
+        robotTyping: false,
     }
 
     get isAdmin() {
@@ -42,13 +44,18 @@ export default class App extends Component {
 
     sendMessage(e) {
         const { input: inputDiv } = this.refs;
-        window.asd = this.refs;
         if (inputDiv && inputDiv.innerText && e.which === 13) {
             const message = inputDiv.innerText;
             this.setMessage({ message, time: +new Date(), sender: 'usr' }, () => {
                 setTimeout(() => {
+                    this.setState({
+                        robotTyping: false,
+                    });
                     this.setMessage({ message: this.autoResponse(message), time: +new Date(), sender: 'robot' });
                 }, 500);
+            });
+            this.setState({
+                robotTyping: true,
             });
             setTimeout(() => {
                 inputDiv.innerHTML = '';
@@ -62,21 +69,27 @@ export default class App extends Component {
         this.setState({
             messageList,
         }, callback);
+        const { message: messageDiv } = this.refs;
+        setTimeout(() => {
+            messageDiv.scrollTop = messageDiv.scrollHeight;
+        }, 0);
     }
+
+    quickReply() {}
 
     render() {
         const { menuList, messageList } = this.state;
         return <div className="background">
-            <div className="chat-room">
+            <div className={['chat-room', window.deviceInfo.isPc ? '' : 'phone'].join(' ')}>
                 <div className="usr-info">
                     <img className='left-info' src="./src/hanbag.png" onClick={() => { window.open('./src/hanbag.png'); }}></img>
                     <div className="right-info">
                         <div className="name">精神小伙杰尼🐢</div>
-                        <div className="sign">大🍔批，真🦷么真🍔批</div>
+                        <div className="sign">{this.state.robotTyping ? '正在输入中...' : '大🍔批，真🦷么真🍔批'}</div>
                     </div>
                 </div>
                 <div className="chat-info">
-                    <div className="send-info">
+                    <div className="send-info" ref="message">
                         {this.isAdmin && <div className="admin-power">
                             {menuList.map((item) => <a style={{ padding: '0 10px' }} href={item.url}>{item.name}</a>)}
                         </div> }
@@ -94,6 +107,10 @@ export default class App extends Component {
                     </div>
                     <div className="drive-line"></div>
                     <div contentEditable={true} ref="input" onKeyDown={this.sendMessage.bind(this)} className="edit-info"/>
+                    <div className="button-area">
+                        <button>快捷消息</button>
+                        <button onClick={() => { this.sendMessage({ which: 13 }); }}>发送(Enter)</button>
+                    </div>
                 </div>
             </div>
         </div>;
