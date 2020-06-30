@@ -147,7 +147,7 @@ export default class App extends Component {
                     <div className="drive-line"></div>
                     <div contentEditable={true} ref="input" onKeyDown={this.sendMessage.bind(this)} className="edit-info"/>
                     <div className="button-area">
-                        <button>快捷消息</button>
+                        {/* <button>快捷消息</button> */}
                         <button onClick={() => { this.sendMessage({ which: 13 }); }}>发送(Enter)</button>
                     </div>
                 </div>
