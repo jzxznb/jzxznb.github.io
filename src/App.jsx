@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
-import axios from 'axios';
 import { getSearch, sleep } from '../common/utils';
-import { BIRDURL, CHATURL } from '../common/constant';
-import { KEYWORDMAP } from '../common/enum';
+import {
+    BIRDURL, CHATURL, KEYWORDMAP, KEYWORDURLMAP,
+} from '../common/constant';
 import { get } from '../common/fetch';
 import './app.less';
 
@@ -39,21 +39,48 @@ export default class App extends Component {
 
     async autoResponse(message) {
         const { menuList = '' } = this.state;
-        let res = menuList.find((item) => message.indexOf(item.name) !== -1);
+        let res = menuList.find((item) => message === item.name);
         if (res && res.show) {
             await sleep(500);
             return <a href={res.url}>{res.name}</a>;
         }
         res = await this.autoAIchat(message);
-        return res.replace(/{br}/g, '\n');
+        return typeof res === 'string' ? res.replace(/{br}/g, '\n') : res;
     }
 
     async autoAIchat(message) {
-        const res = await get({ url: `${BIRDURL}${CHATURL}${message}` });
+        const middleUrl = CHATURL;
+        // 有关键字的逻辑
+        const keyword = Object.keys(KEYWORDMAP).find((key) => message.indexOf(KEYWORDMAP[key]) === 0);
+        if (keyword && KEYWORDURLMAP[keyword]) {
+            const res = await this.keyWordApi(message, keyword);
+            return res;
+        }
+        // 聊天逻辑
+        const res = await get({ url: `${BIRDURL}${middleUrl}${message}` });
         if (res && res.content) {
             return res.content;
         }
         return '你个憨八🐢, 给👴爬';
+    }
+
+    async keyWordApi(message, keyword) {
+        const middleUrl = KEYWORDURLMAP[keyword];
+        const messageInfo = message.slice(KEYWORDMAP[keyword].length);
+        switch (keyword) {
+        case 'film':
+            return <a href={`${middleUrl}${messageInfo}.html`}>{messageInfo}</a>;
+        case 'fortune': {
+            const { result1, result2 } = await get({ url: `${BIRDURL}${middleUrl}${messageInfo}` });
+            const { summary } = result1 || result2;
+            if (!summary) return '查询失败';
+            return summary;
+        }
+        case 'keyWord':
+            return Object.keys(KEYWORDMAP).map((key) => KEYWORDMAP[key]).join(', ');
+        default:
+            return null;
+        }
     }
 
     async sendMessage(e) {
@@ -86,8 +113,6 @@ export default class App extends Component {
             messageDiv.scrollTop = messageDiv.scrollHeight;
         }, 0);
     }
-
-    quickReply() {}
 
     render() {
         const { menuList, messageList } = this.state;
