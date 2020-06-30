@@ -59,5 +59,12 @@ module.exports = {
     ],
     devServer: {
         port: 8888,
+        // proxy: {
+        //     '/guessUcan1tfind': {
+        //         target: 'http://39.98.39.217:5000',
+        //         pathRewrite: { '^/guessUcan1tfind': '' },
+        //         secure: false,
+        //     },
+        // },
     },
 };
