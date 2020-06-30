@@ -13,7 +13,7 @@ export default class App extends Component {
         menuList: [
             { name: '1', show: this.isAdmin, url: '/child_project/docs/src/.vuepress/dist/index.html' },
             { name: '文档', show: true, url: '/child_project/docs/dist/index.html' },
-            { name: '2', show: true },
+            { name: '基金', show: true },
             { name: '2', show: true },
             { name: '2', show: true },
             { name: '2', show: true },
@@ -67,8 +67,10 @@ export default class App extends Component {
     async keyWordApi(message, keyword) {
         const middleUrl = KEYWORDURLMAP[keyword];
         const messageInfo = message.slice(KEYWORDMAP[keyword].length);
+
         switch (keyword) {
         case 'film':
+            if (!messageInfo) return '我丢, 不输入电影名👴怎么找?';
             return <a href={`${middleUrl}${messageInfo}.html`}>{messageInfo}</a>;
         case 'fortune': {
             const { result1, result2 } = await get({ url: `${BIRDURL}${middleUrl}${messageInfo}` });
