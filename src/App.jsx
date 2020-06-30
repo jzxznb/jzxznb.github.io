@@ -1,6 +1,9 @@
 import React, { Component } from 'react';
 import axios from 'axios';
-import { getSearch, sleep } from '../common/utils.ts';
+import { getSearch, sleep } from '../common/utils';
+import { BIRDURL, CHATURL } from '../common/constant';
+import { KEYWORDMAP } from '../common/enum';
+import { get } from '../common/fetch';
 import './app.less';
 
 function timeStampFormat(timeStamp) {
@@ -17,6 +20,7 @@ export default class App extends Component {
         ],
         messageList: [],
         robotTyping: false,
+        isChat: false,
     }
 
     get isAdmin() {
@@ -45,12 +49,11 @@ export default class App extends Component {
     }
 
     async autoAIchat(message) {
-        const res = await axios.get(`http://39.98.39.217:5000/guessUcan1tfind?msg=${message}`);
-        if (!res || !res.data || !res.data.content) {
-            return '你个憨八🐢，给👴爬';
+        const res = await get({ url: `${BIRDURL}${CHATURL}${message}` });
+        if (res && res.content) {
+            return res.content;
         }
-        const { content } = (res || {}).data;
-        return content;
+        return '你个憨八🐢, 给👴爬';
     }
 
     async sendMessage(e) {

@@ -22,6 +22,8 @@ module.exports = {
     ],
     rules: {
         'class-methods-use-this': 'off',
+        'import/no-unresolved': 'off',
+        'import/extensions': 'off',
         'no-unused-vars': 'off',
         'no-console': 'off',
         'no-alert': 'off',
