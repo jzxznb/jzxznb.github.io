@@ -5,7 +5,7 @@
 
 // https://www.jianshu.com/p/981bee4393ba
 // https://bird.ioliu.cn/
-export const BIRDURL = 'https://bird.ioliu.cn/v1/?url=';
+export const BIRDURL = 'https://bird.ioliu.cn/v2/?url=';
 export const CHATURL = 'http://api.qingyunke.com/api.php?key=free&appid=0&msg=';
 
 // 阿凡达
