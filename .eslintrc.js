@@ -25,6 +25,7 @@ module.exports = {
         'import/no-unresolved': 'off',
         'import/extensions': 'off',
         'no-unused-vars': 'off',
+        'import/prefer-default-export': 'off',
         'no-console': 'off',
         'no-alert': 'off',
         indent: ['error', 4],

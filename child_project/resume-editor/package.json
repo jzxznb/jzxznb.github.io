@@ -8,7 +8,11 @@
   },
   "dependencies": {
     "core-js": "^3.6.5",
+    "element-ui": "^2.13.2",
+    "react": "^16.13.1",
+    "react-dom": "^16.13.1",
     "vue": "^2.6.11",
+    "vuedraggable": "^2.23.2",
     "vuex": "^3.4.0"
   },
   "devDependencies": {
