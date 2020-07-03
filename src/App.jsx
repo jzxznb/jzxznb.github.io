@@ -13,7 +13,7 @@ export default class App extends Component {
         menuList: [
             { name: '1', show: this.isAdmin, url: '/child_project/docs/src/.vuepress/dist/index.html' },
             { name: '文档', show: true, url: '/child_project/docs/dist/index.html' },
-            { name: '基金', show: true },
+            { name: '简历', show: true, url: '/child_project/resume-editor/dist/index.html' },
             { name: '2', show: true },
             { name: '2', show: true },
             { name: '2', show: true },
@@ -121,7 +121,11 @@ export default class App extends Component {
         return <div className="background">
             <div className={['chat-room', window.deviceInfo.isPc ? '' : 'phone'].join(' ')}>
                 <div className="usr-info">
-                    <img className='left-info' src="./src/hanbag.png" onClick={() => { window.open('./src/hanbag.png'); }}></img>
+                    <img
+                        className='left-info' src="./src/hanbag.png"
+                        onClick={() => { window.open('./src/hanbag.png'); }}
+                    >
+                    </img>
                     <div className="right-info">
                         <div className="name">精神小伙杰尼🐢</div>
                         <div className="sign">{this.state.robotTyping ? '正在输入中...' : '大🍔批，真🦷么真🍔批'}</div>
@@ -137,7 +141,9 @@ export default class App extends Component {
                             return (<div key={index} className={[sender, 'message'].join(' ')}>
                                 <img
                                     src={sender === 'robot' ? './src/hanbag.png' : './src/daidais.png'}
-                                    onClick={() => { window.open(`${sender === 'robot' ? './src/hanbag.png' : './src/daidais.png'}`); }}/>
+                                    onClick={() => {
+                                        window.open(`${sender === 'robot' ? './src/hanbag.png' : './src/daidais.png'}`);
+                                    }}/>
                                 <div style={{ display: 'flex' }}>
                                     <span className="bubble-box">{item.message}</span>
                                 </div>
@@ -145,7 +151,9 @@ export default class App extends Component {
                         })}
                     </div>
                     <div className="drive-line"></div>
-                    <div contentEditable={true} ref="input" onKeyDown={this.sendMessage.bind(this)} className="edit-info"/>
+                    <div contentEditable={true} ref="input"
+                        onKeyDown={this.sendMessage.bind(this)} className="edit-info"
+                    />
                     <div className="button-area">
                         {/* <button>快捷消息</button> */}
                         <button onClick={() => { this.sendMessage({ which: 13 }); }}>发送(Enter)</button>

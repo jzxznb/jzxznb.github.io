@@ -1,3 +1,3 @@
 module.exports = {
-    publicPath: '/child_project/fund/dist',
+    publicPath: '/child_project/resume-editor/dist',
 };
