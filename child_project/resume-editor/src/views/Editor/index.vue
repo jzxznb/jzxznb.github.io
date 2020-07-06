@@ -9,12 +9,16 @@
                 v-bind="draggableOptions"
             >
                 <rag
-                    class="rag-item-tob"
+                    :class="{'no-bottom': index === rags.length - 1}"
                     v-for="(rag,index) in rags"
                     :key="index"
                     :rag="rag"
+                    :form-list-visible.sync="formListVisible"
                 ></rag>
             </v-drag>
+        </div>
+        <div style="width: 300px;" class="form-list">
+            <form-list :visible.sync="formListVisible"></form-list>
         </div>
     </div>
 </template>
@@ -25,12 +29,14 @@ import { mapState, mapActions } from 'vuex';
 import { LIBS as libs } from '../../common/constant';
 import Rag from './Rag';
 import Libs from './Libs';
+import FormList from './FormList';
 
 export default {
     components: {
         VDrag,
         Rag,
         Libs,
+        FormList,
     },
     data() {
         return {
@@ -42,6 +48,7 @@ export default {
                 group: { name: 'editor' },
                 animation: 150,
             },
+            formListVisible: false,
         };
     },
     computed: {
@@ -88,16 +95,17 @@ export default {
 <style lang="less" scoped>
     .editor{
         display: flex;
+        position: relative;
         height: 100%;
         .preview{
             flex: 1;
             height: 100%;
             display: flex;
+            overflow: auto;
+            justify-content: center;
             .editor-drag{
-                margin-left: 200px;
-                background-color: #f4f4f5;
-                overflow: auto;
-                width: 700px;
+                background-color: #d6d6d6;
+                min-width: 700px;
                 height: 100%;
                 .draggable-item {
                     padding: 0 !important;
@@ -110,6 +118,9 @@ export default {
                 }
                 .rag-item-tob{
                     margin-bottom: 10px;
+                }
+                .no-bottom{
+                    margin-bottom: 0;
                 }
             }
         }

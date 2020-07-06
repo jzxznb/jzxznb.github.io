@@ -25,7 +25,7 @@
                         :data-rag-name="submenu.ragName"
                         :data-rag-type="item.type"
                     >
-                        <img class="item-img" :src="item.url">
+                        <img class="item-img" :src="item.url || altUrl">
                     </el-menu-item>
                 </v-drag>
         </el-submenu>
@@ -48,6 +48,7 @@ export default {
                 sort: false,
                 filter: '.not-draggable',
             },
+            altUrl: 'https://dummyimage.com/188x240/ff80c0/fff.png&text=%E7%94%9C%E7%94%9C%E7%9A%84%E7%B2%89%E8%89%B2',
         };
     },
     computed: {
@@ -73,6 +74,8 @@ export default {
                 min-width: 96px;
                 .item-img{
                     width: 96px;
+                    border: 2px double #909399;
+                    border-radius: 4px;
                 }
             }
         }
