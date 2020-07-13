@@ -19,4 +19,7 @@ export default {
     .app{
         display: flex;
     }
+    .form-component-item{
+        margin: 0 !important;
+    }
 </style>

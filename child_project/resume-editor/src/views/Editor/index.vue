@@ -17,7 +17,7 @@
                 ></rag>
             </v-drag>
         </div>
-        <div style="width: 300px;" class="form-list">
+        <div style="width: 300px;overflow: auto;" class="form-list">
             <form-list :visible.sync="formListVisible"></form-list>
         </div>
     </div>

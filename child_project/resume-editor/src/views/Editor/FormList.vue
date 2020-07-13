@@ -10,6 +10,7 @@
 
 <script>
 import { mapState } from 'vuex';
+import Vue from 'vue';
 
 const components = {};
 const context = require.context('@/components', true, /\.vue$/);
@@ -17,10 +18,11 @@ const context = require.context('@/components', true, /\.vue$/);
 (function () {
     context.keys().forEach((...params) => {
         const a = context(...params);
-        components[a.default.name] = a.default;
+        // components[a.default.name] = a.default;
+
+        Vue.component(a.default.name, a.default);
     });
 }());
-console.log(components);
 export default {
     props: {
         visible: {
@@ -32,6 +34,7 @@ export default {
     computed: {
         ...mapState(['selectUid', 'ragList']),
         componentName() {
+            console.log(this);
             const target = this.ragList.find((i) => i.uid === this.selectUid);
             if (!target) return '';
             return `component-${target.ragName}`;
