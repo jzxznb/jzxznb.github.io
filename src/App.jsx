@@ -14,7 +14,7 @@ export default class App extends Component {
             { name: '1', show: this.isAdmin, url: '/child_project/docs/src/.vuepress/dist/index.html' },
             { name: '文档', show: true, url: '/child_project/docs/dist/index.html' },
             { name: '简历', show: true, url: '/child_project/resume-editor/dist/index.html' },
-            { name: '2', show: true },
+            { name: '游戏', show: true, url: '/child_project/games/bundle' },
             { name: '2', show: true },
             { name: '2', show: true },
         ],
