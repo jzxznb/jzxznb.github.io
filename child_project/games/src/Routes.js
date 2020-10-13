@@ -1,6 +1,6 @@
 import CrossLoad from './views/crossLoad/index.jsx';
 import Home from './views/home/index.jsx';
-import CssStack from './views/cssStack/index.jsx';
+import GoBang from './views/goBang/index.jsx';
 
 // const CrossLoad = () => import('./views/crossLoad');
 
@@ -16,8 +16,8 @@ export const Routes = [
         component: CrossLoad
     },
     {
-        path: '/cssStack',
-        key: 'cssStack',
-        component: CssStack
+        path: '/goBang',
+        component: GoBang,
+        key: 'goBang'
     }
 ];
