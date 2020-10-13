@@ -1,14 +1,13 @@
 /* eslint-disable no-param-reassign */
 /* eslint-disable default-case */
+import { doc } from 'prettier';
 import * as THREE from '../../plugins/three.module';
 
 export function runGame() {
     const counterDOM = document.getElementById('counter');
     const endDOM = document.getElementById('end');
-
+    let animationFrame;
     const scene = new THREE.Scene();
-    this.scene = scene;
-
     const distance = 500;
     const camera = new THREE.OrthographicCamera(
         window.innerWidth / -2,
@@ -476,7 +475,7 @@ export function runGame() {
     }
 
     function animate(timestamp) {
-        requestAnimationFrame(animate);
+        animationFrame = requestAnimationFrame(animate);
 
         if (!previousTimestamp) previousTimestamp = timestamp;
         const delta = timestamp - previousTimestamp;
@@ -610,8 +609,7 @@ export function runGame() {
     this.leftBt && this.leftBt.addEventListener('click', () => move('left'));
 
     this.rightBt && this.rightBt.addEventListener('click', () => move('right'));
-
-    window.addEventListener('keydown', event => {
+    function keyListener(event) {
         if (`${event.keyCode}` === '38' || `${event.key}` === 'ArrowUp') {
             // up arrow
             move('forward');
@@ -625,7 +623,45 @@ export function runGame() {
             // right arrow
             move('right');
         }
-    });
+    }
 
-    requestAnimationFrame(animate);
+    window.addEventListener('keydown', keyListener);
+    this.unmount = () => {
+        function dispose(parent, child) {
+            if (child.children.length) {
+                const arr = child.children.filter(x => x);
+                arr.forEach(a => {
+                    dispose(child, a);
+                });
+            }
+            if (child instanceof THREE.Mesh || child instanceof THREE.Line) {
+                if (child.material.map) child.material.map.dispose && child.material.map.dispose();
+                child.material.dispose && child.material.dispose();
+                child.geometry.dispose && child.geometry.dispose();
+                child.material = null;
+                child.geometry = null;
+            } else if (child.material) {
+                child.material.dispose && child.material.dispose();
+                child.material = null;
+            }
+            child.remove();
+            parent.remove(child);
+        }
+        scene.children
+            .filter(x => x)
+            .forEach(a => {
+                dispose(scene, a);
+            });
+
+        window.removeEventListener('keydown', keyListener);
+        cancelAnimationFrame(animationFrame);
+        renderer.dispose();
+        THREE.Cache.clear();
+        const canvasList = document.getElementsByTagName('canvas');
+        Array.prototype.forEach.call(canvasList, item => {
+            document.body.removeChild(item);
+        });
+    };
+
+    animationFrame = requestAnimationFrame(animate);
 }

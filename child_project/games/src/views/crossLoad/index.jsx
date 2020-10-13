@@ -14,12 +14,16 @@ export default class CrossLoad extends Component {
 
     retryBt = null;
 
+    scene = null;
+
+    unmount = () => {};
+
     componentDidMount() {
         runGame.call(this);
     }
 
     componentWillUnmount() {
-        console.log(this);
+        this.unmount();
     }
 
     render() {

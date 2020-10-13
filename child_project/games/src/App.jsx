@@ -12,7 +12,7 @@ export default class App extends Component {
             <Router>
                 <Switch>
                     {Routes.map(item => (
-                        <Route path={item.path} key={item.key} component={item.component}></Route>
+                        <Route exact path={item.path} key={item.key} component={item.component}></Route>
                     ))}
                 </Switch>
             </Router>

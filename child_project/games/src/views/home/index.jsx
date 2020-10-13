@@ -1,8 +1,19 @@
 import React, { Component } from 'react';
-import { HashRouter as Router, Route, Link } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 export default class index extends Component {
+    gameMenu = [
+        { name: 'crossLoad', path: '/crossLoad' },
+        { name: 'stack', path: '/cssStack' }
+    ];
+
     render() {
-        return <div>21312</div>;
+        return (
+            <div>
+                {this.gameMenu.map(item => (
+                    <Link to={item.path}>{item.name}</Link>
+                ))}
+            </div>
+        );
     }
 }
