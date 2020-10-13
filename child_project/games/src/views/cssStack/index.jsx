@@ -4,7 +4,7 @@ import './style.less';
 export default class cssStack extends Component {
     render() {
         return (
-            <div>
+            <div class="css-stack">
                 <form class="screen" novalidate>
                     <input id="start" type="checkbox" tabindex="-1" />
                     <input id="end" type="checkbox" tabindex="-1" />

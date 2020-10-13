@@ -28,7 +28,7 @@ export default class CrossLoad extends Component {
 
     render() {
         return (
-            <div>
+            <div className="cross-load">
                 <div id="counter">0</div>
                 <div id="controlls">
                     <div>

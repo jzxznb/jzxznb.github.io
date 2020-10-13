@@ -1,6 +1,5 @@
 /* eslint-disable no-param-reassign */
 /* eslint-disable default-case */
-import { doc } from 'prettier';
 import * as THREE from '../../plugins/three.module';
 
 export function runGame() {
