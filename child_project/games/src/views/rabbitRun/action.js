@@ -772,12 +772,12 @@ export function runGame() {
     };
 
     Hero.prototype.nod = function () {
-        const that = this;
+        const that = this || window;
         const sp = 0.5 + Math.random();
 
         // HEAD
         const tHeadRotY = -Math.PI / 6 + (Math.random() * Math.PI) / 3;
-        TweenMax.to(this.head.rotation, sp, {
+        TweenMax.to(that.head.rotation, sp, {
             y: tHeadRotY,
             ease: Power4.easeInOut,
             onComplete() {
@@ -1120,7 +1120,7 @@ export function runGame() {
         monsterPosTarget -= delta * monsterAcceleration;
         monsterPos += (monsterPosTarget - monsterPos) * delta;
         if (monsterPos < 0.56) {
-            gameOver();
+            gameOver.call(window);
         }
 
         const angle = Math.PI * monsterPos;
@@ -1329,7 +1329,7 @@ export function runGame() {
         }
 
         if (dm.length() < collisionObstacle && obstacle.status !== 'flying') {
-            getMalus();
+            getMalus.call(window);
         }
     }
 

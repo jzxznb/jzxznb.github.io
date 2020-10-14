@@ -1,17 +1,24 @@
 import React, { Component } from 'react';
 import { runGame } from './action';
-import './OrbitControls';
+import './style.less';
 
 export default class RabbitRun extends Component {
+    world;
+
     componentDidMount() {
-        runGame();
+        runGame.call(this);
     }
 
     render() {
         return (
             <div className="rabbit-run">
-                <div id="world" />
-                <div id="gameover-instructions"> Game Over </div>
+                <div
+                    ref={e => {
+                        this.world = e;
+                    }}
+                    id="world"
+                />
+                <div id="gameoverInstructions"> Game Over </div>
                 <div id="dist">
                     <div className="label">distance</div>
                     <div id="distValue">000</div>
