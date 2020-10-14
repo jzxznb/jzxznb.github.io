@@ -7,7 +7,8 @@ export default class index extends Component {
         {
             name: 'goBang',
             path: '/goBang'
-        }
+        },
+        { name: 'rabbitRun', path: '/rabbitRun' }
     ];
 
     render() {

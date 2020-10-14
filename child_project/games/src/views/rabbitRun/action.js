@@ -3,8 +3,8 @@
 /* eslint-disable no-multi-assign */
 // THREEJS RELATED VARIABLES
 /* global TweenMax, Power4, Power2, Power1, Back */
-import './OrbitControls';
 import * as THREE from '../../plugins/three.module';
+import './OrbitControls';
 
 export function runGame() {
     let scene;
