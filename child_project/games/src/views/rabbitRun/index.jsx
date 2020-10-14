@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { runGame } from './action';
+import './OrbitControls';
 
 export default class RabbitRun extends Component {
     componentDidMount() {
