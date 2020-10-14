@@ -5,8 +5,14 @@ import './style.less';
 export default class RabbitRun extends Component {
     world;
 
+    unmount = () => {};
+
     componentDidMount() {
         runGame.call(this);
+    }
+
+    componentWillUnmount() {
+        this.unmount();
     }
 
     render() {

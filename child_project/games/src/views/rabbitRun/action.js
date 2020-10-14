@@ -4,6 +4,7 @@
 // THREEJS RELATED VARIABLES
 /* global TweenMax, Power4, Power2, Power1, Back */
 import * as THREE from '../../plugins/three.module';
+import { destroyScene } from '../../common/common';
 
 export function runGame() {
     let scene;
@@ -44,7 +45,7 @@ export function runGame() {
     const monsterAcceleration = 0.004;
     const malusClearColor = 0xb44b39;
     const malusClearAlpha = 0;
-    const audio = new Audio('Antonio-Vivaldi-Summer_01.mp3');
+    // const audio = new Audio('Antonio-Vivaldi-Summer_01.mp3');
     let fieldGameOver;
     let fieldDistance;
 
@@ -66,39 +67,40 @@ export function runGame() {
     // Materials
     const blackMat = new THREE.MeshPhongMaterial({
         color: 0x100707,
-        shading: THREE.FlatShading
+        flatShading: true
     });
 
     const brownMat = new THREE.MeshPhongMaterial({
         color: 0xb44b39,
         shininess: 0,
-        shading: THREE.FlatShading
+        //
+        flatShading: true
     });
 
     const greenMat = new THREE.MeshPhongMaterial({
         color: 0x7abf8e,
         shininess: 0,
-        shading: THREE.FlatShading
+        flatShading: true
     });
 
     const pinkMat = new THREE.MeshPhongMaterial({
         color: 0xdc5f45, // 0xb43b29,//0xff5b49,
         shininess: 0,
-        shading: THREE.FlatShading
+        flatShading: true
     });
 
     const lightBrownMat = new THREE.MeshPhongMaterial({
         color: 0xe07a57,
-        shading: THREE.FlatShading
+        flatShading: true
     });
 
     const whiteMat = new THREE.MeshPhongMaterial({
         color: 0xa49789,
-        shading: THREE.FlatShading
+        flatShading: true
     });
     const skinMat = new THREE.MeshPhongMaterial({
         color: 0xff9ea5,
-        shading: THREE.FlatShading
+        flatShading: true
     });
 
     // OTHER VARIABLES
@@ -130,7 +132,7 @@ export function runGame() {
         gameStatus = 'play';
         hero.status = 'running';
         hero.nod();
-        audio.play();
+        // audio.play();
         updateLevel();
         levelInterval = setInterval(updateLevel, levelUpdateFreq);
     }
@@ -309,7 +311,7 @@ export function runGame() {
         this.torso.add(this.pants);
 
         const tailGeom = new THREE.CubeGeometry(3, 3, 3, 1);
-        tailGeom.applyMatrix(new THREE.Matrix4().makeTranslation(0, 0, -2));
+        tailGeom.applyMatrix4(new THREE.Matrix4().makeTranslation(0, 0, -2));
         this.tail = new THREE.Mesh(tailGeom, lightBrownMat);
         this.tail.position.z = -4;
         this.tail.position.y = 5;
@@ -320,7 +322,7 @@ export function runGame() {
 
         const headGeom = new THREE.CubeGeometry(10, 10, 13, 1);
 
-        headGeom.applyMatrix(new THREE.Matrix4().makeTranslation(0, 0, 7.5));
+        headGeom.applyMatrix4(new THREE.Matrix4().makeTranslation(0, 0, 7.5));
         this.head = new THREE.Mesh(headGeom, brownMat);
         this.head.position.z = 2;
         this.head.position.y = 11;
@@ -347,8 +349,8 @@ export function runGame() {
         this.head.add(this.nose);
 
         const mouthGeom = new THREE.CubeGeometry(4, 2, 4, 1);
-        mouthGeom.applyMatrix(new THREE.Matrix4().makeTranslation(0, 0, 3));
-        mouthGeom.applyMatrix(new THREE.Matrix4().makeRotationX(Math.PI / 12));
+        mouthGeom.applyMatrix4(new THREE.Matrix4().makeTranslation(0, 0, 3));
+        mouthGeom.applyMatrix4(new THREE.Matrix4().makeRotationX(Math.PI / 12));
         this.mouth = new THREE.Mesh(mouthGeom, brownMat);
         this.mouth.position.z = 8;
         this.mouth.position.y = -4;
@@ -393,7 +395,7 @@ export function runGame() {
 
         earGeom.vertices[3].x -= 2;
         earGeom.vertices[3].z += 0.5;
-        earGeom.applyMatrix(new THREE.Matrix4().makeTranslation(0, 9, 0));
+        earGeom.applyMatrix4(new THREE.Matrix4().makeTranslation(0, 9, 0));
 
         this.earL = new THREE.Mesh(earGeom, brownMat);
         this.earL.position.x = 2;
@@ -588,13 +590,13 @@ export function runGame() {
         this.torso = new THREE.Mesh(torsoGeom, blackMat);
 
         const headGeom = new THREE.CubeGeometry(20, 20, 40, 1);
-        headGeom.applyMatrix(new THREE.Matrix4().makeTranslation(0, 0, 20));
+        headGeom.applyMatrix4(new THREE.Matrix4().makeTranslation(0, 0, 20));
         this.head = new THREE.Mesh(headGeom, blackMat);
         this.head.position.z = 12;
         this.head.position.y = 2;
 
         const mouthGeom = new THREE.CubeGeometry(10, 4, 20, 1);
-        mouthGeom.applyMatrix(new THREE.Matrix4().makeTranslation(0, -2, 10));
+        mouthGeom.applyMatrix4(new THREE.Matrix4().makeTranslation(0, -2, 10));
         this.mouth = new THREE.Mesh(mouthGeom, blackMat);
         this.mouth.position.y = -8;
         this.mouth.rotation.x = 0.4;
@@ -632,7 +634,7 @@ export function runGame() {
         }
 
         const tongueGeometry = new THREE.CubeGeometry(6, 1, 14);
-        tongueGeometry.applyMatrix(new THREE.Matrix4().makeTranslation(0, 0, 7));
+        tongueGeometry.applyMatrix4(new THREE.Matrix4().makeTranslation(0, 0, 7));
 
         this.tongue = new THREE.Mesh(tongueGeometry, pinkMat);
         this.tongue.position.z = 2;
@@ -677,7 +679,7 @@ export function runGame() {
         earGeom.vertices[0].x -= 4;
         earGeom.vertices[0].z -= 2;
 
-        earGeom.applyMatrix(new THREE.Matrix4().makeTranslation(0, 3, 0));
+        earGeom.applyMatrix4(new THREE.Matrix4().makeTranslation(0, 3, 0));
 
         this.earL = new THREE.Mesh(earGeom, blackMat);
         this.earL.position.x = 6;
@@ -694,9 +696,9 @@ export function runGame() {
         eyeGeom = new THREE.CubeGeometry(2, 4, 4);
 
         const tailGeom = new THREE.CylinderGeometry(5, 2, 20, 4, 1);
-        tailGeom.applyMatrix(new THREE.Matrix4().makeTranslation(0, 10, 0));
-        tailGeom.applyMatrix(new THREE.Matrix4().makeRotationX(-Math.PI / 2));
-        tailGeom.applyMatrix(new THREE.Matrix4().makeRotationZ(Math.PI / 4));
+        tailGeom.applyMatrix4(new THREE.Matrix4().makeTranslation(0, 10, 0));
+        tailGeom.applyMatrix4(new THREE.Matrix4().makeRotationX(-Math.PI / 2));
+        tailGeom.applyMatrix4(new THREE.Matrix4().makeRotationZ(Math.PI / 4));
 
         this.tail = new THREE.Mesh(tailGeom, blackMat);
         this.tail.position.z = -10;
@@ -704,7 +706,7 @@ export function runGame() {
         this.torso.add(this.tail);
 
         const pawGeom = new THREE.CylinderGeometry(1.5, 0, 10);
-        pawGeom.applyMatrix(new THREE.Matrix4().makeTranslation(0, -5, 0));
+        pawGeom.applyMatrix4(new THREE.Matrix4().makeTranslation(0, -5, 0));
         this.pawFL = new THREE.Mesh(pawGeom, blackMat);
         this.pawFL.position.y = -7.5;
         this.pawFL.position.z = 8.5;
@@ -949,7 +951,7 @@ export function runGame() {
         this.body = new THREE.Mesh(bodyGeom, pinkMat);
 
         const leafGeom = new THREE.CubeGeometry(5, 10, 1, 1);
-        leafGeom.applyMatrix(new THREE.Matrix4().makeTranslation(0, 5, 0));
+        leafGeom.applyMatrix4(new THREE.Matrix4().makeTranslation(0, 5, 0));
         leafGeom.vertices[2].x -= 1;
         leafGeom.vertices[3].x -= 1;
         leafGeom.vertices[6].x += 1;
@@ -1017,7 +1019,7 @@ export function runGame() {
         this.eyeR.position.x = -this.eyeL.position.x;
 
         const spikeGeom = new THREE.CubeGeometry(0.5, 2, 0.5, 1);
-        spikeGeom.applyMatrix(new THREE.Matrix4().makeTranslation(0, 1, 0));
+        spikeGeom.applyMatrix4(new THREE.Matrix4().makeTranslation(0, 1, 0));
 
         for (let i = 0; i < 9; i += 1) {
             const row = i % 3;
@@ -1139,7 +1141,7 @@ export function runGame() {
     function Fir() {
         const height = 200;
         const truncGeom = new THREE.CylinderGeometry(2, 2, height, 6, 1);
-        truncGeom.applyMatrix(new THREE.Matrix4().makeTranslation(0, height / 2, 0));
+        truncGeom.applyMatrix4(new THREE.Matrix4().makeTranslation(0, height / 2, 0));
         this.mesh = new THREE.Mesh(truncGeom, greenMat);
         this.mesh.castShadow = true;
     }
@@ -1155,7 +1157,7 @@ export function runGame() {
         const nhSegments = 3; // Math.ceil(2 + Math.random()*6);
         const nvSegments = 3; // Math.ceil(2 + Math.random()*6);
         const geom = new THREE.CylinderGeometry(topRadius, bottomRadius, truncHeight, nhSegments, nvSegments);
-        geom.applyMatrix(new THREE.Matrix4().makeTranslation(0, truncHeight / 2, 0));
+        geom.applyMatrix4(new THREE.Matrix4().makeTranslation(0, truncHeight / 2, 0));
 
         this.mesh = new THREE.Mesh(geom, matTrunc);
 
@@ -1191,7 +1193,7 @@ export function runGame() {
                 const thickness = 0.2 + Math.random();
 
                 const branchGeometry = new THREE.CylinderGeometry(thickness / 2, thickness, h, 3, 1);
-                branchGeometry.applyMatrix(new THREE.Matrix4().makeTranslation(0, h / 2, 0));
+                branchGeometry.applyMatrix4(new THREE.Matrix4().makeTranslation(0, h / 2, 0));
                 const branch = new THREE.Mesh(branchGeometry, matTrunc);
                 branch.position.x = v.x;
                 branch.position.y = v.y;
@@ -1358,7 +1360,7 @@ export function runGame() {
         }
 
         render();
-        requestAnimationFrame(loop);
+        controls = requestAnimationFrame(loop);
     }
 
     function initUI() {
@@ -1380,5 +1382,15 @@ export function runGame() {
         loop();
     }
 
-    window.addEventListener('load', init, false);
+    init();
+    this.unmount = () => {
+        window.removeEventListener('resize', handleWindowResize);
+        document.removeEventListener('mousedown', handleMouseDown);
+        document.removeEventListener('touchend', handleMouseDown);
+        cancelAnimationFrame(controls);
+        clearInterval(levelInterval);
+        destroyScene(scene);
+        TweenMax.killAll();
+        scene = null;
+    };
 }

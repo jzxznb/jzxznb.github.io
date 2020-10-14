@@ -22,11 +22,12 @@ function dispose(parent, child) {
     parent.remove(child);
 }
 export function destroyScene(scene, renderer) {
-    scene.children
-        .filter(x => x)
-        .forEach(a => {
-            dispose(scene, a);
-        });
-    renderer.dispose();
+    scene &&
+        scene.children
+            .filter(x => x)
+            .forEach(a => {
+                dispose(scene, a);
+            });
+    renderer && renderer.dispose();
     THREE.Cache.clear();
 }

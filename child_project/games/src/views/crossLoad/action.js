@@ -7,7 +7,7 @@ export function runGame() {
     const counterDOM = document.getElementById('counter');
     const endDOM = document.getElementById('end');
     let animationFrame;
-    const scene = new THREE.Scene();
+    let scene = new THREE.Scene();
     const distance = 500;
     const camera = new THREE.OrthographicCamera(
         window.innerWidth / -2,
@@ -630,6 +630,7 @@ export function runGame() {
         window.removeEventListener('keydown', keyListener);
         cancelAnimationFrame(animationFrame);
         destroyScene(scene, renderer);
+        scene = null;
         const canvasList = document.getElementsByTagName('canvas');
         Array.prototype.forEach.call(canvasList, item => {
             document.body.removeChild(item);
