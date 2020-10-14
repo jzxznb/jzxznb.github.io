@@ -1,6 +1,7 @@
 /* eslint-disable no-param-reassign */
 /* eslint-disable default-case */
 import * as THREE from '../../plugins/three.module';
+import { destroyScene } from '../../common/common';
 
 export function runGame() {
     const counterDOM = document.getElementById('counter');
@@ -626,36 +627,9 @@ export function runGame() {
 
     window.addEventListener('keydown', keyListener);
     this.unmount = () => {
-        function dispose(parent, child) {
-            if (child.children.length) {
-                const arr = child.children.filter(x => x);
-                arr.forEach(a => {
-                    dispose(child, a);
-                });
-            }
-            if (child instanceof THREE.Mesh || child instanceof THREE.Line) {
-                if (child.material.map) child.material.map.dispose && child.material.map.dispose();
-                child.material.dispose && child.material.dispose();
-                child.geometry.dispose && child.geometry.dispose();
-                child.material = null;
-                child.geometry = null;
-            } else if (child.material) {
-                child.material.dispose && child.material.dispose();
-                child.material = null;
-            }
-            child.remove();
-            parent.remove(child);
-        }
-        scene.children
-            .filter(x => x)
-            .forEach(a => {
-                dispose(scene, a);
-            });
-
         window.removeEventListener('keydown', keyListener);
         cancelAnimationFrame(animationFrame);
-        renderer.dispose();
-        THREE.Cache.clear();
+        destroyScene(scene, renderer);
         const canvasList = document.getElementsByTagName('canvas');
         Array.prototype.forEach.call(canvasList, item => {
             document.body.removeChild(item);
