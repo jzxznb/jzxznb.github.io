@@ -4,7 +4,7 @@
 // THREEJS RELATED VARIABLES
 /* global TweenMax, Power4, Power2, Power1, Back */
 import * as THREE from '../../plugins/three.module';
-import './OrbitControls';
+// import './OrbitControls';
 
 export function runGame() {
     let scene;
