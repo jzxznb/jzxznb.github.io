@@ -53,7 +53,6 @@ export default class Game {
             player.y += player.vy;
         } else {
             if (player.vy < 0 && this.land.visible) {
-                console.log(this.land);
                 this.land.y -= player.vy;
             }
             if (this.land.y > screenHeight) {

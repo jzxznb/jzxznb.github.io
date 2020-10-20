@@ -6,9 +6,9 @@ interface PostParams {
     configParams?: AxiosRequestConfig;
 }
 
-interface getParams{
-    url: string,
-    config?:AxiosRequestConfig
+interface getParams {
+    url: string;
+    config?: AxiosRequestConfig;
 }
 
 export async function get({ url, config }: getParams) {

@@ -20,11 +20,16 @@ export const KEYWORDMAP = {
     translate: '翻译',
     songWord: '歌词',
     film: '电影',
-    fortune: '运势',
+    fortune: '运势'
 };
 
 export const KEYWORDURLMAP = {
     film: 'https://www.kanjuba.cn/search-',
     fortune: `http://api.avatardata.cn/Constellation/Query?key=${APPKEY}&type=today&consName=`,
-    keyWord: 'none',
+    keyWord: 'none'
 };
+
+// BMOB
+export const SECRET_KEY = 'db844c42d1969662';
+
+export const SECURITY_CODE = 'asd123';

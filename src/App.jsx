@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
+import Bmob from 'hydrogen-js-sdk';
+import moment from 'moment';
 import { getSearch, sleep } from '../common/utils';
-import { BIRDURL, CHATURL, KEYWORDMAP, KEYWORDURLMAP } from '../common/constant';
+import { BIRDURL, CHATURL, KEYWORDMAP, KEYWORDURLMAP, SECURITY_CODE, SECRET_KEY } from '../common/constant';
 import { get } from '../common/fetch';
 import './app.less';
 
@@ -24,8 +26,8 @@ export default class App extends Component {
         return !!getSearch(window.location.href, 'admin');
     }
 
-    componentDidMount() {
-        window.app = this;
+    async componentDidMount() {
+        Bmob.initialize(SECRET_KEY, SECURITY_CODE);
     }
 
     openUrl(url) {
@@ -88,7 +90,9 @@ export default class App extends Component {
         const { input: inputDiv } = this.refs;
         if (inputDiv && inputDiv.innerText && e.which === 13) {
             const message = inputDiv.innerText;
-            this.setMessage({ message, time: +new Date(), sender: 'usr' });
+            const usrMsg = { message, time: +new Date(), sender: 'usr' };
+            this.setMessage(usrMsg);
+            this.sendMessageToBmob(usrMsg);
             this.setState({
                 robotTyping: true
             });
@@ -101,6 +105,16 @@ export default class App extends Component {
                 robotTyping: false
             });
         }
+    }
+
+    async sendMessageToBmob({ message, time }) {
+        const { cname } = window.returnCitySN;
+        const query = Bmob.Query('chat');
+        query.set('geo', cname);
+        query.set('msg', message);
+        query.set('sendTime', moment(time).format('YYYY-MM-DD HH:mm:ss'));
+        const res = await query.save();
+        console.log(res);
     }
 
     setMessage(message, callback = () => {}) {

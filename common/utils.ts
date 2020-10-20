@@ -13,9 +13,7 @@ export const getSearch = (url: string, key: any) => {
 export const deviceInfo = () => {
     const { userAgent } = navigator;
     const isPc = () => {
-        const Agents = ['Android', 'iPhone',
-            'SymbianOS', 'Windows Phone',
-            'iPad', 'iPod'];
+        const Agents = ['Android', 'iPhone', 'SymbianOS', 'Windows Phone', 'iPad', 'iPod'];
         let flag = true;
         for (let v = 0; v < Agents.length; v += 1) {
             if (userAgent.indexOf(Agents[v]) > 0) {
@@ -27,14 +25,15 @@ export const deviceInfo = () => {
     };
     // @ts-ignore
     window.deviceInfo = {
-        isPc: isPc(),
+        isPc: isPc()
     };
 };
 
-export const sleep = (time: number) => new Promise((resolve) => {
-    setTimeout(() => {
-        resolve(true);
-    }, time);
-});
+export const sleep = (time: number) =>
+    new Promise(resolve => {
+        setTimeout(() => {
+            resolve(true);
+        }, time);
+    });
 
 deviceInfo();
