@@ -108,7 +108,7 @@ export default class App extends Component {
     }
 
     async sendMessageToBmob({ message, time }) {
-        const { cname } = window.returnCitySN;
+        const { cname = '未知区域' } = window.returnCitySN || {};
         const query = Bmob.Query('chat');
         query.set('geo', cname);
         query.set('msg', message);
