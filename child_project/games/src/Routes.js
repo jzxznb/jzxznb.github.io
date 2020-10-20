@@ -2,7 +2,7 @@ import CrossLoad from './views/crossLoad/index.jsx';
 import Home from './views/home/index.jsx';
 import GoBang from './views/goBang/index.jsx';
 import RabbitRun from './views/rabbitRun/index.jsx';
-
+import SpaceJump from './views/spaceJump/index.jsx';
 // const CrossLoad = () => import('./views/crossLoad');
 
 export const Routes = [
@@ -25,5 +25,10 @@ export const Routes = [
         path: '/rabbitRun',
         component: RabbitRun,
         key: 'rabbitRun'
+    },
+    {
+        path: '/spaceJump',
+        component: SpaceJump,
+        key: 'spaceJump'
     }
 ];
