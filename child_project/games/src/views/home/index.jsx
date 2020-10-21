@@ -3,12 +3,13 @@ import { Link } from 'react-router-dom';
 
 export default class index extends Component {
     gameMenu = [
-        { name: 'crossLoad', path: '/crossLoad' },
+        { name: '穿越马路', path: '/crossLoad' },
         {
-            name: 'goBang',
+            name: '五子棋',
             path: '/goBang'
         },
-        { name: 'rabbitRun', path: '/rabbitRun' }
+        { name: '逃跑', path: '/rabbitRun' },
+        { name: '跳跃', path: '/spaceJump' }
     ];
 
     render() {

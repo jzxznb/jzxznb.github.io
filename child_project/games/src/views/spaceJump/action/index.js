@@ -1,5 +1,5 @@
 import Player from './player';
-import { screenWidth, screenHeight } from './common/config';
+import { screenWidth, screenHeight, PLATFORM_VALUE } from './common/config';
 import Land from './land';
 import Platform from './platform';
 import Background from './background';
@@ -72,20 +72,21 @@ export default class Game {
         // 判断是否落在平台上
         const { player } = this;
         this.platforms.forEach((item, index) => {
+            const platform = item;
             // 先变化平台位置，再执行update
             if (player.y < screenHeight / 2 - player.height / 2) {
                 // 当角色跳跃高度超过屏幕一半高时移动平台位置
                 if (player.vy < 0) {
-                    item.y -= player.vy;
+                    platform.y -= player.vy;
                 }
                 // 移动到屏幕外的平台回收重新绘制
-                if (item.y > screenHeight) {
+                if (platform.y > screenHeight) {
                     // 回收一个就记下一个分数
-                    this.score += item.score;
-                    item.destroy();
+                    // this.score += item.score;
+                    platform.destroy();
                     this.platforms[index] = new Platform({
                         score: this.score,
-                        y: item.y - screenHeight
+                        y: platform.y - screenHeight
                     });
                 }
             }
@@ -99,14 +100,14 @@ export default class Game {
                 player.y + player.height > item.y &&
                 player.y + player.height < item.y + item.height
             ) {
-                if (item.type === 1) {
+                if (item.type === PLATFORM_VALUE.NORMAL) {
                     player.jump();
-                } else if (item.type === 2) {
+                } else if (item.type === PLATFORM_VALUE.MOVE) {
                     player.jump();
-                } else if (item.type === 3) {
-                    item.visible = false;
-                } else if (item.type === 4) {
-                    item.visible = false;
+                } else if (item.type === PLATFORM_VALUE.BROKEN) {
+                    platform.visible = false;
+                } else if (item.type === PLATFORM_VALUE.WILL_FADED) {
+                    platform.visible = false;
                     player.jump();
                 }
             }
@@ -120,8 +121,8 @@ export default class Game {
                     player.y + player.height > spring.y &&
                     player.y + player.height < spring.y + spring.height
                 ) {
-                    spring.setShoot();
-                    player.jumpHigh();
+                    spring.shoot = true;
+                    player.jumpBySpring();
                 }
             }
         });

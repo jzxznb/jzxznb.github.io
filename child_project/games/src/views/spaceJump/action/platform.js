@@ -73,12 +73,35 @@ export default class Platform extends Sprite {
         if (this.spring) {
             Platform.spring -= 1;
         }
+        this.brokenPlatform = null;
+        this.spring = null;
     }
 
-    update() {}
+    update() {
+        if (this.type === PLATFORM_VALUE.MOVE) {
+            this.x += this.vx;
+        }
+        if (this.x <= 0 || this.x + this.width >= screenWidth) {
+            this.vx = -this.vx;
+        }
+        if (this.spring) {
+            this.spring.x = this.x + (this.width - this.spring.width) / 2;
+            this.spring.y = this.y - this.spring.height;
+        }
+        if (!this.visible && this.type === PLATFORM_VALUE.BROKEN) {
+            if (!this.brokenPlatform) {
+                this.brokenPlatform = new BrokenPlatform({ x: this.x, y: this.y });
+            } else {
+                this.brokenPlatform.update();
+            }
+        }
+    }
 
     render(ctx) {
         this.drawToCanvas(ctx);
+        if (this.brokenPlatform) {
+            this.brokenPlatform.drawToCanvas(ctx);
+        }
         if (this.spring) {
             this.spring.drawToCanvas(ctx);
         }
