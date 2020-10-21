@@ -10,7 +10,7 @@ module.exports = {
         path: path.resolve(__dirname, '../bundle'),
         filename: '[name].js',
         // filename: '[name].[chunkhash].js',//哈希值，但是劳资不需要
-        publicPath: '/child_project/games/bundle' // 打包后输出路径以/bundle/开头
+        publicPath: '/child_project/games/bundle/' // 打包后输出路径以/bundle/开头
     },
     resolve: {
         extensions: ['.js', '.css', '.less', 'jsx'],
