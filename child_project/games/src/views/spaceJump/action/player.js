@@ -46,6 +46,33 @@ export default class Player extends Sprite {
         } else {
             this.dir === 'left' || this.dir === 'left_land' ? (this.dir = 'left') : (this.dir = 'right');
         }
+        const leftSpeed = -0.1;
+        const rightSpeed = 0.1;
+        const maxSpeed = 8;
+
+        if (this.isMovingLeft) {
+            if (Math.abs(this.vx + leftSpeed) < maxSpeed) {
+                this.vx += leftSpeed;
+            }
+            this.x += this.vx;
+        } else {
+            if (this.vx < 0) {
+                this.vx += rightSpeed;
+            }
+            this.x += this.vx;
+        }
+
+        if (this.isMovingRight) {
+            if (Math.abs(this.vx + rightSpeed) < maxSpeed) {
+                this.vx += rightSpeed;
+            }
+            this.x += this.vx;
+        } else {
+            if (this.vx > 0) {
+                this.vx += leftSpeed;
+            }
+            this.x += this.vx;
+        }
 
         if (this.x > screenWidth) this.x = -this.width;
         else if (this.x < -this.width) this.x = screenWidth;

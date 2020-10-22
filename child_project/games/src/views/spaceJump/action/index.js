@@ -21,6 +21,7 @@ export default class Game {
         this.bg = new Background();
         this.player = new Player();
         this.land = new Land();
+        this.initEvent();
         for (let i = 0; i < this.length; i += 1) {
             this.platforms.push(
                 new Platform({
@@ -48,6 +49,9 @@ export default class Game {
         player.update();
         if (player.y + player.height > this.land.y) {
             player.jump();
+        }
+        if (player.y + player.height >= screenHeight && !this.land.visible) {
+            this.isOver = 1;
         }
         if (player.y >= screenHeight / 2 - player.height / 2) {
             player.y += player.vy;
@@ -90,15 +94,15 @@ export default class Game {
                     });
                 }
             }
-            item.update();
+            platform.update();
             // 向上跳的过程不判断，平台消失后不判断
-            if (!item.visible || player.vy < 0) return;
+            if (!platform.visible || player.vy < 0) return;
             // 判断角色是否落在平台上
             if (
-                player.x + 15 < item.x + item.width &&
-                player.x + player.width - 15 > item.x &&
-                player.y + player.height > item.y &&
-                player.y + player.height < item.y + item.height
+                player.x + 15 < platform.x + platform.width &&
+                player.x + player.width - 15 > platform.x &&
+                player.y + player.height > platform.y &&
+                player.y + player.height < platform.y + platform.height
             ) {
                 if (item.type === PLATFORM_VALUE.NORMAL) {
                     player.jump();
@@ -127,6 +131,29 @@ export default class Game {
             }
         });
     }
+
+    initEvent() {
+        this.canvas.addEventListener('touchstart', this.touchHandler.bind(this));
+        this.canvas.addEventListener('touchend', this.touchHandler.bind(this));
+    }
+
+    touchHandler(event) {
+        const { touches = [] } = event || {};
+        const touch = touches[touches.length - 1];
+        if (!touch) return;
+        const { clientX } = touch;
+        if (clientX <= screenWidth / 2) {
+            this.player.isMovingLeft = true;
+            this.player.isMovingRight = false;
+            this.player.dir = 'left';
+        } else {
+            this.player.isMovingRight = true;
+            this.player.isMovingLeft = false;
+            this.player.dir = 'right';
+        }
+    }
+
+    destroy() {}
 
     loop() {
         this.render();
