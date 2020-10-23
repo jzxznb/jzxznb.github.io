@@ -36,7 +36,7 @@ export default class Platform extends Sprite {
         if (this.type === PLATFORM_VALUE.BROKEN && Platform.broken < 1) {
             Platform.broken += 1;
         } else if (this.type === PLATFORM_VALUE.BROKEN && Platform.broken >= 1) {
-            this.type === [1, 2][Math.floor(Math.random() * 2)];
+            this.type = [1, 2][Math.floor(Math.random() * 2)];
             Platform.broken = 0;
         }
 
@@ -56,7 +56,7 @@ export default class Platform extends Sprite {
             this.sy = 90;
             this.score = 30;
         }
-
+        console.log(this.type, Platform.broken);
         if (
             (this.type === PLATFORM_VALUE.NORMAL || this.type === PLATFORM_VALUE.MOVE) &&
             Platform.spring < 2 &&

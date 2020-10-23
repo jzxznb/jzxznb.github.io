@@ -29,6 +29,9 @@ export default class Player extends Sprite {
     proxy() {
         return new Proxy(this, {
             get(target, key, handle) {
+                if (key === 'vx' || key === 'x' || key === 'y') {
+                    return Number(target[key].toFixed(1));
+                }
                 return Reflect.get(target, key, handle);
             },
             set(target, key, value, handle) {

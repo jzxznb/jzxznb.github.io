@@ -34,6 +34,10 @@ export default class Game {
         this.gameId = requestAnimationFrame(this.loop.bind(this));
     }
 
+    gameOver() {
+        // if (!this.isOver) return;
+    }
+
     render() {
         this.update();
         this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
@@ -46,6 +50,7 @@ export default class Game {
     update() {
         const { player } = this;
         if (this.isOver) return;
+        this.bg.update();
         player.update();
         if (player.y + player.height > this.land.y) {
             player.jump();
@@ -56,6 +61,10 @@ export default class Game {
         if (player.y >= screenHeight / 2 - player.height / 2) {
             player.y += player.vy;
         } else {
+            if (player.vy < 0) {
+                this.score = parseInt(this.score + Math.abs(player.vy), 10);
+                // this.bg.y = Number((this.bg.y - player.vy).toFixed(1));
+            }
             if (player.vy < 0 && this.land.visible) {
                 this.land.y -= player.vy;
             }
@@ -133,11 +142,23 @@ export default class Game {
     }
 
     initEvent() {
-        this.canvas.addEventListener('touchstart', this.touchHandler.bind(this));
-        this.canvas.addEventListener('touchend', this.touchHandler.bind(this));
+        this.canvas.addEventListener('touchstart', this.touchStartHandler.bind(this));
+        this.canvas.addEventListener('touchend', this.touchEndHandler.bind(this));
     }
 
-    touchHandler(event) {
+    removeEvent() {
+        this.canvas.removeEventListener('touchstart', this.touchStartHandler.bind(this));
+        this.canvas.removeEventListener('touchend', this.touchEndHandler.bind(this));
+    }
+
+    touchEndHandler(event) {
+        event.preventDefault();
+        this.player.isMovingLeft = false;
+        this.player.isMovingRight = false;
+    }
+
+    touchStartHandler(event) {
+        event.preventDefault();
         const { touches = [] } = event || {};
         const touch = touches[touches.length - 1];
         if (!touch) return;
