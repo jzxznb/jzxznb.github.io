@@ -56,7 +56,6 @@ export default class Platform extends Sprite {
             this.sy = 90;
             this.score = 30;
         }
-        console.log(this.type, Platform.broken);
         if (
             (this.type === PLATFORM_VALUE.NORMAL || this.type === PLATFORM_VALUE.MOVE) &&
             Platform.spring < 2 &&

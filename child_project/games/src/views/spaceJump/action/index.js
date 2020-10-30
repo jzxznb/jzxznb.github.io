@@ -22,14 +22,14 @@ export default class Game {
         this.player = new Player();
         this.land = new Land();
         this.initEvent();
-        for (let i = 0; i < this.length; i += 1) {
-            this.platforms.push(
-                new Platform({
-                    score: this.score,
-                    y: (screenHeight / this.length) * i + 10 + Math.random() * 10
-                })
-            );
-        }
+        // for (let i = 0; i < this.length; i += 1) {
+        //     this.platforms.push(
+        //         new Platform({
+        //             score: this.score,
+        //             y: (screenHeight / this.length) * i + 10 + Math.random() * 10
+        //         })
+        //     );
+        // }
         cancelAnimationFrame(this.gameId);
         this.gameId = requestAnimationFrame(this.loop.bind(this));
     }
@@ -152,12 +152,14 @@ export default class Game {
     }
 
     touchEndHandler(event) {
+        console.log('touchend');
         event.preventDefault();
         this.player.isMovingLeft = false;
         this.player.isMovingRight = false;
     }
 
     touchStartHandler(event) {
+        console.log('touchstart');
         event.preventDefault();
         const { touches = [] } = event || {};
         const touch = touches[touches.length - 1];
