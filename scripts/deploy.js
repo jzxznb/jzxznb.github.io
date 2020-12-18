@@ -18,7 +18,9 @@ try {
     buildProcess = fs
         .readdirSync(path.resolve(__dirname, '../child_project'))
         .filter(item => fs.statSync(path.resolve(__dirname, `../child_project/${item}`)).isDirectory())
-        .map(item => shell(`cd ${path.resolve(__dirname, `../child_project/${item}`)} && npm run build`));
+        .map(item =>
+            shell(`cd ${path.resolve(__dirname, `../child_project/${item}`)} && npm install && npm run build`)
+        );
 } catch (error) {
     console.log(error);
 }

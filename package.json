@@ -2,7 +2,7 @@
   "name": "project",
   "version": "1.0.0",
   "scripts": {
-    "build": "webpack --config scripts/webpack.config.js",
+    "build": "rm -rf bundle && webpack --config scripts/webpack.config.js",
     "dev": "MODE=development webpack-dev-server --config scripts/webpack.config.js"
   },
   "repository": {
