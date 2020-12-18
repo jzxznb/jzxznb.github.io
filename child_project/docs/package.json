@@ -5,7 +5,7 @@
     "main": "index.js",
     "scripts": {
         "serve": "vuepress dev src",
-        "build": "vuepress build src"
+        "build": "rm -rf dist && vuepress build src"
     },
     "author": "",
     "license": "ISC"

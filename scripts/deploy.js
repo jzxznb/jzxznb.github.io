@@ -4,26 +4,29 @@ const fs = require('fs');
 const path = require('path');
 
 const { exec } = childProcess;
-const buildProcess = [];
+let buildProcess = [];
 
-console.log();
 function shell(command) {
     return new Promise((resolve, reject) => {
         exec(command, (err, out, code) => {
-            resolve({ err, out, code });
+            resolve({ err, out, code, command });
         });
     });
 }
 
 try {
-    const childProject = fs.readdirSync(path.resolve(__dirname, '../child_project')).filter(async item => {
-        const dirPath = path.resolve(__dirname, `../child_project/${item}`);
-        if (fs.statSync(dirPath).isDirectory()) {
-            // console.log(filePath, fs.readdirSync(filePath));
-            const res = await shell(`cd ${dirPath} && ls & npm run build`);
-            console.log(res);
-        }
-    });
+    buildProcess = fs
+        .readdirSync(path.resolve(__dirname, '../child_project'))
+        .filter(item => fs.statSync(path.resolve(__dirname, `../child_project/${item}`)).isDirectory())
+        .map(item => shell(`cd ${path.resolve(__dirname, `../child_project/${item}`)} && npm run build`));
 } catch (error) {
     console.log(error);
 }
+
+const run = async () => {
+    const res = await Promise.all(buildProcess);
+    const errList = res.filter(item => item.err);
+    errList.length >= 0 && console.log('err', errList);
+};
+
+run();
