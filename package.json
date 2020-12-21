@@ -3,7 +3,8 @@
   "version": "1.0.0",
   "scripts": {
     "build": "rm -rf bundle && webpack --config scripts/webpack.config.js",
-    "dev": "MODE=development webpack-dev-server --config scripts/webpack.config.js"
+    "dev": "MODE=development webpack-dev-server --config scripts/webpack.config.js",
+    "build-all": ""
   },
   "repository": {
     "type": "git",
